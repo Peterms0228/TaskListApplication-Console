@@ -101,9 +101,9 @@ namespace TaskListApplication2
         static void viewTask()
         {
             string option = "";
+            displayTaskList(taskList);
             while (option != "q")
             {
-                displayTaskList(taskList);
                 Console.WriteLine("Enter 1 to Sorted by Due Date (Ascending)");
                 Console.WriteLine("Enter 2 to Sorted by Due Date (Descending)");
                 Console.WriteLine("Enter 3 to \"Completed\" Task");
