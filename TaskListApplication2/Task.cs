@@ -4,10 +4,11 @@ using System.Text;
 
 namespace TaskListApplication2
 {
+    public enum Status { Pending, Completed }
     class Task
     {
-        string name;
-        DateTime dueDate;
-        string status;
+        public string name;
+        public DateTime dueDate;
+        public Status status;
     }
 }
