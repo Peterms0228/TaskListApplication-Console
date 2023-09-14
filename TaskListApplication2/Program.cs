@@ -52,8 +52,6 @@ namespace TaskListApplication2
                         break;
                 }
             }
-                
-            
         }
 
         static void addTask()
@@ -78,16 +76,12 @@ namespace TaskListApplication2
             bool isValidDate = false;
             do
             {
-                Console.WriteLine("Enter Due Date (dd/mm/yyyy) or \"t\" for Today:");
+                Console.WriteLine("Enter Due Date (dd/mm/yyyy)");
                 String inputDate = Console.ReadLine();
                 if (DateTime.TryParseExact(inputDate, dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
                 {
                     isValidDate = true;
                     task.dueDate = parsedDate;
-                } else if (inputDate.Equals("t"))
-                {
-                    isValidDate = true;
-                    task.dueDate = DateTime.Now;
                 }
                 else
                 {
@@ -96,9 +90,9 @@ namespace TaskListApplication2
             } while (!isValidDate);
 
             taskList.Add(task);
-
+            Console.WriteLine("Task Added:");
             displayColor(task.status,
-                "Task Added:" + task.name + "\t" +
+                task.name + "\t" +
                 task.dueDate.ToString(dateFormat) + "\t" + 
                 task.status);
 
@@ -109,6 +103,7 @@ namespace TaskListApplication2
             string option = "";
             while (option != "q")
             {
+                displayTaskList(taskList);
                 Console.WriteLine("Enter 1 to Sorted by Due Date (Ascending)");
                 Console.WriteLine("Enter 2 to Sorted by Due Date (Descending)");
                 Console.WriteLine("Enter 3 to \"Completed\" Task");
@@ -155,9 +150,10 @@ namespace TaskListApplication2
                 }
                 else
                 {
+                    Console.WriteLine("Task Updated: ");
                     taskList[taskNo].status = Status.Completed;
                     displayColor(taskList[taskNo].status,
-                        "Task Updated:" + taskList[taskNo].name + "\t" +
+                        taskList[taskNo].name + "\t" +
                         taskList[taskNo].dueDate.ToString(dateFormat) + "\t" +
                         taskList[taskNo].status);
                 }
@@ -167,7 +163,7 @@ namespace TaskListApplication2
         static void deleteTask()
         {
             displayTaskList(taskList);
-            Console.WriteLine("Enter Task No to delete; q to Quit::");
+            Console.WriteLine("Enter Task No to delete; q to Quit:");
             string taskNoStr = Console.ReadLine();
             if (!taskNoStr.Equals("q"))
             {
@@ -178,8 +174,9 @@ namespace TaskListApplication2
                 }
                 else
                 {
+                    Console.WriteLine("Task Removed: ");
                     displayColor(taskList[taskNo].status,
-                        "Task Removed:" + taskList[taskNo].name + "\t" +
+                        taskList[taskNo].name + "\t" +
                         taskList[taskNo].dueDate.ToString(dateFormat) + "\t" +
                         taskList[taskNo].status);
                     taskList.RemoveAt(taskNo);
@@ -195,7 +192,7 @@ namespace TaskListApplication2
             return false;
         }
         //check is the task inside task list
-        //0 = Invalid; else Valid
+        //-1 = Invalid; else Valid
         static int isTaskNoValid(string taskNoStr)
         {
             if (int.TryParse(taskNoStr, out int taskNo))
