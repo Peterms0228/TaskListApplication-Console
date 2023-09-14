@@ -49,6 +49,9 @@ namespace TaskListApplication2
         {
             Task task = new Task();
 
+            task.status = Status.Pending;
+
+            //check null
             Console.WriteLine("Enter Task Name:");
             do
             {
@@ -60,8 +63,7 @@ namespace TaskListApplication2
                 }
             } while (isStringNull(task.name));
             
-
-            //date checking           
+            //check date format         
             bool isValidDate = false;
             do
             {
@@ -82,21 +84,20 @@ namespace TaskListApplication2
                 }
             } while (!isValidDate);
 
-            //status = pending while adding
-            task.status = Status.Pending;
             taskList.Add(task);
-            Console.WriteLine(task.name + "\t" + task.dueDate.ToString(dateFormat) + "\t" + task.status);
-            Console.WriteLine("Task Added Successfully");
+            Console.WriteLine("Task Added:" + task.name + "\t" + 
+                task.dueDate.ToString(dateFormat) + "\t" + task.status);
+
         }
 
         static void viewTask()
-        {
-            
+        {           
             Console.WriteLine("Task List:");
             for (int i = 0; i < taskList.Count; i++)
             {
                 int count = i + 1;
-                Console.WriteLine(count + ". " + taskList[i].name + "\t" +
+                Console.WriteLine(count + ". " + "\t" + 
+                    taskList[i].name + "\t" +
                     taskList[i].dueDate.ToString(dateFormat) + "\t" + 
                     taskList[i].status);
             }
@@ -104,12 +105,40 @@ namespace TaskListApplication2
 
         static void updateTask()
         {
-
+            
         }
 
         static void deleteTask()
         {
-
+            if(taskList.Count == 0)
+            {
+                Console.WriteLine("No Task Yet");
+            }
+            else
+            {
+                viewTask();
+                Console.WriteLine("Enter Task No to delete:");
+                string taskNoStr = Console.ReadLine();
+                if (int.TryParse(taskNoStr, out int taskNo))
+                {
+                    if ( 0 < taskNo && taskNo <= taskList.Count)
+                    {
+                        int i = taskNo - 1;
+                        Console.WriteLine("Task Removed:" + taskList[i].name + "\t" +
+                            taskList[i].dueDate.ToString(dateFormat) + "\t" +
+                            taskList[i].status);
+                        taskList.RemoveAt(i);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Task Not Found");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Task No");
+                }
+            }
         }
         static Boolean isStringNull(string str)
         {
