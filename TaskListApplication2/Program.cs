@@ -85,8 +85,11 @@ namespace TaskListApplication2
             } while (!isValidDate);
 
             taskList.Add(task);
-            Console.WriteLine("Task Added:" + task.name + "\t" + 
-                task.dueDate.ToString(dateFormat) + "\t" + task.status);
+
+            displayColor(task.status,
+                "Task Added:" + task.name + "\t" +
+                task.dueDate.ToString(dateFormat) + "\t" + 
+                task.status);
 
         }
 
@@ -96,16 +99,52 @@ namespace TaskListApplication2
             for (int i = 0; i < taskList.Count; i++)
             {
                 int count = i + 1;
-                Console.WriteLine(count + ". " + "\t" + 
+
+                if (taskList[i].status == Status.Pending)
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                }
+                else if(taskList[i].status == Status.Completed)
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                }
+
+                displayColor(taskList[i].status,
+                    count + ". " + "\t" +
                     taskList[i].name + "\t" +
-                    taskList[i].dueDate.ToString(dateFormat) + "\t" + 
+                    taskList[i].dueDate.ToString(dateFormat) + "\t" +
                     taskList[i].status);
             }
         }
 
         static void updateTask()
         {
-            
+            if (taskList.Count == 0)
+            {
+                Console.WriteLine("No Task Yet");
+            }
+            else
+            {
+                viewTask();
+                Console.WriteLine("Enter Task No to marked \"Completed\":");
+                string taskNoStr = Console.ReadLine();
+                int taskNo = isTaskNoValid(taskNoStr);
+                if (taskNo == 0)
+                {
+                    Console.WriteLine("Task Not Found");
+                }
+                else
+                {
+                    int i = taskNo - 1;
+                    taskList[i].status = Status.Completed;
+                    
+                    displayColor(taskList[i].status,
+                        "Task Updated:" + taskList[i].name + "\t" +
+                        taskList[i].dueDate.ToString(dateFormat) + "\t" +
+                        taskList[i].status);
+                }
+            }
+
         }
 
         static void deleteTask()
@@ -119,24 +158,19 @@ namespace TaskListApplication2
                 viewTask();
                 Console.WriteLine("Enter Task No to delete:");
                 string taskNoStr = Console.ReadLine();
-                if (int.TryParse(taskNoStr, out int taskNo))
+                int taskNo = isTaskNoValid(taskNoStr);
+                if (taskNo == 0)
                 {
-                    if ( 0 < taskNo && taskNo <= taskList.Count)
-                    {
-                        int i = taskNo - 1;
-                        Console.WriteLine("Task Removed:" + taskList[i].name + "\t" +
-                            taskList[i].dueDate.ToString(dateFormat) + "\t" +
-                            taskList[i].status);
-                        taskList.RemoveAt(i);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Task Not Found");
-                    }
+                    Console.WriteLine("Task Not Found");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Task No");
+                    int i = taskNo - 1;
+                    displayColor(taskList[i].status, 
+                        "Task Removed:" + taskList[i].name + "\t" +
+                        taskList[i].dueDate.ToString(dateFormat) + "\t" +
+                        taskList[i].status);
+                    taskList.RemoveAt(i);
                 }
             }
         }
@@ -147,6 +181,32 @@ namespace TaskListApplication2
                 return true;
             }
             return false;
+        }
+
+        static int isTaskNoValid(string taskNoStr)
+        {
+            if (int.TryParse(taskNoStr, out int taskNo))
+            {
+                if (0 < taskNo && taskNo <= taskList.Count)
+                {
+                    return taskNo;
+                }
+            }
+            return 0;
+        }
+
+        static void displayColor(Status s, String str)
+        {
+            if (s.Equals(Status.Pending))
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+            }
+            else if (s.Equals(Status.Completed))
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+            }
+            Console.WriteLine(str);
+            Console.ResetColor();
         }
 
     }
