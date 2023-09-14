@@ -76,7 +76,7 @@ namespace TaskListApplication2
             bool isValidDate = false;
             do
             {
-                Console.WriteLine("Enter Due Date (dd/mm/yyyy)");
+                Console.WriteLine("Enter Due Date (dd/mm/yyyy):");
                 String inputDate = Console.ReadLine();
                 if (DateTime.TryParseExact(inputDate, dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
                 {
