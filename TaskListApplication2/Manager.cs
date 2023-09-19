@@ -4,10 +4,8 @@ using System.Text;
 
 namespace TaskListApplication2
 {
-    class Manager
+    class Manager : Settings
     {
-        public static string dateFormat = "dd/MM/yyyy";
-
         //check is the string null?
         public static bool isStringNull(string str)
         {
@@ -63,9 +61,7 @@ namespace TaskListApplication2
                 int no = i + 1;
                 displayColor(list[i].Status,
                     no + ". " + "\t" +
-                    list[i].Name + "\t" +
-                    list[i].DueDate.ToString(dateFormat) + "\t" +
-                    list[i].Status);
+                    list[i]);
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace TaskListApplication2
@@ -42,10 +41,7 @@ namespace TaskListApplication2
             
             taskList.Add(task);
             Console.WriteLine("Task Added:");
-            displayColor(task.Status,
-                task.Name + "\t" +
-                task.DueDate.ToString(dateFormat) + "\t" +
-                task.Status);
+            displayColor(task.Status, task.ToString());
 
             return taskList;
         }
@@ -103,10 +99,7 @@ namespace TaskListApplication2
                         int i = taskNo - 1;
                         Console.WriteLine("Task Updated: ");
                         taskList[i].Status = Status.Completed;
-                        displayColor(taskList[i].Status,
-                            taskList[i].Name + "\t" +
-                            taskList[i].DueDate.ToString(dateFormat) + "\t" +
-                            taskList[i].Status);
+                        displayColor(taskList[i].Status, taskList[i].ToString());
                     }
                     else
                     {
@@ -135,10 +128,7 @@ namespace TaskListApplication2
                     {
                         int i = taskNo - 1;
                         Console.WriteLine("Task Removed: ");
-                        displayColor(taskList[i].Status,
-                            taskList[i].Name + "\t" +
-                            taskList[i].DueDate.ToString(dateFormat) + "\t" +
-                            taskList[i].Status);
+                        displayColor(taskList[i].Status, taskList[i].ToString());
                         taskList.RemoveAt(i);
                     }
                     else

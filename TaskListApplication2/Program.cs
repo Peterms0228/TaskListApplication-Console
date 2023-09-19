@@ -8,12 +8,16 @@ namespace TaskListApplication2
     {
         //Temporary Memory
         public static List<Task> taskList = new List<Task>();
+        
 
         static void Main(string[] args)
         {
             //test Data
-            for (int i = 1; i <= 10; i++) { 
+            for (int i = 1; i <= 10; i++) {
                 taskList.Add(new Task("Task " + i, DateTime.Now));
+
+                CSVData data = new CSVData();
+                data.SaveData(taskList, Task.taskPendingPath);
             }
           
             string option = "";
