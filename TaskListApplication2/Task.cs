@@ -5,6 +5,7 @@ using System.Text;
 namespace TaskListApplication2
 {
     public enum Status { Pending, Completed }
+
     class Task
     {
         private string name;
@@ -12,28 +13,34 @@ namespace TaskListApplication2
         private Status status;
 
         //Constructor
-        public Task()
+        public Task(){
+            this.status = Status.Pending;
+        }
+        public Task(string name, DateTime dueDate)
         {
-            status = Status.Pending; 
+            this.name = name;
+            this.dueDate = dueDate;
+            this.status = Status.Pending;
         }
 
         //Getter & Setter
-        public string Name  
+        public string Name
         {
-            get { return name; }   
-            set { name = value; } 
+            get { return name; }
+            set { name = value; }
         }
 
-        public DateTime DueDate  
+        public DateTime DueDate
         {
-            get { return dueDate; }  
-            set { dueDate = value; } 
+            get { return dueDate; }
+            set { dueDate = value; }
         }
 
-        public Status Status  
+        public Status Status
         {
-            get { return status; }  
-            set { status = value; } 
+            get { return status; }
+            set { status = value; }
         }
+
     }
 }
