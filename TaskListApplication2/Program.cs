@@ -58,19 +58,19 @@ namespace TaskListApplication2
         {
             Task task = new Task();
 
-            task.status = Status.Pending;
+            task.Status = Status.Pending;
 
             //check null
             Console.WriteLine("Enter Task Name:");
             do
             {
-                task.name = Console.ReadLine();
-                if (isStringNull(task.name))
+                task.Name = Console.ReadLine();
+                if (isStringNull(task.Name))
                 {
                     Console.WriteLine("Task Name cannot be empty");
                     Console.WriteLine("Please enter again:");
                 }
-            } while (isStringNull(task.name));
+            } while (isStringNull(task.Name));
             
             //check date format         
             bool isValidDate = false;
@@ -81,7 +81,7 @@ namespace TaskListApplication2
                 if (DateTime.TryParseExact(inputDate, dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
                 {
                     isValidDate = true;
-                    task.dueDate = parsedDate;
+                    task.DueDate = parsedDate;
                 }
                 else
                 {
@@ -91,10 +91,10 @@ namespace TaskListApplication2
 
             taskList.Add(task);
             Console.WriteLine("Task Added:");
-            displayColor(task.status,
-                task.name + "\t" +
-                task.dueDate.ToString(dateFormat) + "\t" + 
-                task.status);
+            displayColor(task.Status,
+                task.Name + "\t" +
+                task.DueDate.ToString(dateFormat) + "\t" + 
+                task.Status);
 
         }
 
@@ -115,19 +115,19 @@ namespace TaskListApplication2
                 switch (option)
                 {
                     case "1":
-                        sortedTaskList = taskList.OrderBy(task => task.dueDate).ToList();
+                        sortedTaskList = taskList.OrderBy(task => task.DueDate).ToList();
                         displayTaskList(sortedTaskList);
                         break;
                     case "2":
-                        sortedTaskList = taskList.OrderByDescending(task => task.dueDate).ToList();
+                        sortedTaskList = taskList.OrderByDescending(task => task.DueDate).ToList();
                         displayTaskList(sortedTaskList);
                         break;
                     case "3":
-                        sortedTaskList = taskList.Where(task => task.status == Status.Completed).ToList();
+                        sortedTaskList = taskList.Where(task => task.Status == Status.Completed).ToList();
                         displayTaskList(sortedTaskList);
                         break;
                     case "4":
-                        sortedTaskList = taskList.Where(task => task.status == Status.Pending).ToList();
+                        sortedTaskList = taskList.Where(task => task.Status == Status.Pending).ToList();
                         displayTaskList(sortedTaskList);
                         break;
                     default:
@@ -151,11 +151,11 @@ namespace TaskListApplication2
                 else
                 {
                     Console.WriteLine("Task Updated: ");
-                    taskList[taskNo].status = Status.Completed;
-                    displayColor(taskList[taskNo].status,
-                        taskList[taskNo].name + "\t" +
-                        taskList[taskNo].dueDate.ToString(dateFormat) + "\t" +
-                        taskList[taskNo].status);
+                    taskList[taskNo].Status = Status.Completed;
+                    displayColor(taskList[taskNo].Status,
+                        taskList[taskNo].Name + "\t" +
+                        taskList[taskNo].DueDate.ToString(dateFormat) + "\t" +
+                        taskList[taskNo].Status);
                 }
             }
         }
@@ -175,10 +175,10 @@ namespace TaskListApplication2
                 else
                 {
                     Console.WriteLine("Task Removed: ");
-                    displayColor(taskList[taskNo].status,
-                        taskList[taskNo].name + "\t" +
-                        taskList[taskNo].dueDate.ToString(dateFormat) + "\t" +
-                        taskList[taskNo].status);
+                    displayColor(taskList[taskNo].Status,
+                        taskList[taskNo].Name + "\t" +
+                        taskList[taskNo].DueDate.ToString(dateFormat) + "\t" +
+                        taskList[taskNo].Status);
                     taskList.RemoveAt(taskNo);
                 }
             }
@@ -224,11 +224,11 @@ namespace TaskListApplication2
             for (int i = 0; i < list.Count; i++)
             {
                 int no = i + 1;
-                displayColor(list[i].status,
+                displayColor(list[i].Status,
                     no + ". " + "\t" +
-                    list[i].name + "\t" +
-                    list[i].dueDate.ToString(dateFormat) + "\t" +
-                    list[i].status);
+                    list[i].Name + "\t" +
+                    list[i].DueDate.ToString(dateFormat) + "\t" +
+                    list[i].Status);
             }
         }
 
