@@ -109,5 +109,80 @@ namespace TaskListApplication2
                 Console.WriteLine("No Records");
             }
         }
+        public void updateTaskCSV()
+        {
+            if (displayTaskCSVList(Task.filePath))
+            {
+                List<Task> taskList = LoadData<Task>(Task.filePath);
+                string taskNoStr = "";
+                do
+                {
+                    Console.WriteLine("Enter Task No to marked \"Completed\"; q to Quit:");
+                    taskNoStr = Console.ReadLine();
+                    if (isInputNumber(taskNoStr))
+                    {
+                        int taskNo = int.Parse(taskNoStr);
+                        if (taskNo > 0 && taskNo <= taskList.Count)
+                        {
+                            int i = taskNo - 1;
+                            Console.WriteLine("Task Updated: ");
+                            taskList[i].Status = Status.Completed;
+                            displayColor(taskList[i].Status, taskList[i].ToString());
+                            SaveData<Task>(taskList, Task.filePath);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Task No");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Task No");
+                    }
+                } while (!taskNoStr.Equals("q"));
+            }
+            else
+            {
+                Console.WriteLine("No Records");
+            }
+        }
+        public void deleteTaskCSV()
+        {
+            if (displayTaskCSVList(Task.filePath))
+            {
+                List<Task> taskList = LoadData<Task>(Task.filePath);
+                string taskNoStr = "";
+                do
+                {
+                    Console.WriteLine("Enter Task No to delete; q to Quit:");
+                    taskNoStr = Console.ReadLine();
+
+                    if (isInputNumber(taskNoStr))
+                    {
+                        int taskNo = int.Parse(taskNoStr);
+                        if (taskNo > 0 && taskNo <= taskList.Count)
+                        {
+                            int i = taskNo - 1;
+                            Console.WriteLine("Task Removed: ");
+                            displayColor(taskList[i].Status, taskList[i].ToString());
+                            taskList.RemoveAt(i);
+                            SaveData<Task>(taskList, Task.filePath);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Task No");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Task No");
+                    }
+                } while (!taskNoStr.Equals("q"));
+            }
+            else
+            {
+                Console.WriteLine("No Records");
+            }
+        }
     }
 }

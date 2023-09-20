@@ -37,9 +37,10 @@ namespace TaskListApplication2
                         taskCSVManager.viewTaskCSV();
                         break;
                     case "3":
+                        taskCSVManager.updateTaskCSV();
                         break;
                     case "4":
-                            //taskList = deleteTask(taskList);
+                        taskCSVManager.deleteTaskCSV();
                         break;
                     default:
                         break;
