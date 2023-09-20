@@ -8,5 +8,6 @@ namespace TaskListApplication2
     {
         public static string dateFormat = "dd/MM/yyyy";
         public static string filePath = "Task List.csv";
+        public enum StatusTypes { Pending, Completed };
     }
 }

@@ -4,10 +4,30 @@ using System.Linq;
 
 namespace TaskListApplication2
 {
-    class TaskManager : Manager
+    class TaskManager : General, IManager
     {
-        public List<Task> addTask(List<Task> taskList)
+        //test only
+        public void loadTestData()
         {
+            List<Task> taskList = new List<Task>();
+            for (int i = 1; i <= 10; i++)
+            {
+                taskList.Add(new Task("Task " + i, DateTime.Now.AddDays(i)));
+
+                SaveData(taskList, Task.filePath);
+            }
+        }
+        //test only
+
+        public void addTaskCSV()
+        {
+            List<Task> taskList = new List<Task>();
+            try
+            {
+                taskList = LoadData<Task>(Task.filePath);
+            }
+            catch (Exception ex) { }
+
             Task task = new Task();
 
             //check null
@@ -38,110 +58,130 @@ namespace TaskListApplication2
                 }
             } while (!isValidDate);
 
-            
             taskList.Add(task);
             Console.WriteLine("Task Added:");
             displayColor(task.Status, task.ToString());
 
-            return taskList;
+            SaveData<Task>(taskList, Task.filePath);
         }
-
-        public void viewTask(List<Task> taskList)
+        public void viewTaskCSV()
         {
-            string option = "";
-            displayTaskList(taskList);
-            while (option != "q")
+            if (displayTaskListByPath(Task.filePath))
             {
-                Console.WriteLine("Enter 1 to Sorted by Due Date (Ascending)");
-                Console.WriteLine("Enter 2 to Sorted by Due Date (Descending)");
-                Console.WriteLine("Enter 3 to \"Completed\" Task");
-                Console.WriteLine("Enter 4 to \"Pending\" Task");
-                Console.WriteLine("Enter q to Quit -->");
-
-                option = Console.ReadLine();
-                List<Task> sortedTaskList = new List<Task>();
-                switch (option)
+                List<Task> taskList = LoadData<Task>(Task.filePath);
+                string option = "";
+                while (option != "q")
                 {
-                    case "1":
-                        sortedTaskList = taskList.OrderBy(task => task.DueDate).ToList();
-                        displayTaskList(sortedTaskList);
-                        break;
-                    case "2":
-                        sortedTaskList = taskList.OrderByDescending(task => task.DueDate).ToList();
-                        displayTaskList(sortedTaskList);
-                        break;
-                    case "3":
-                        sortedTaskList = taskList.Where(task => task.Status == Status.Completed).ToList();
-                        displayTaskList(sortedTaskList);
-                        break;
-                    case "4":
-                        sortedTaskList = taskList.Where(task => task.Status == Status.Pending).ToList();
-                        displayTaskList(sortedTaskList);
-                        break;
-                    default:
-                        break;
+                    Console.WriteLine("Enter 1 to Sorted by Due Date (Ascending)");
+                    Console.WriteLine("Enter 2 to Sorted by Due Date (Descending)");
+                    Console.WriteLine("Enter 3 to \"Completed\" Task");
+                    Console.WriteLine("Enter 4 to \"Pending\" Task");
+                    Console.WriteLine("Enter q to Quit -->");
+
+                    option = Console.ReadLine();
+                    List<Task> sortedTaskList = new List<Task>();
+                    switch (option)
+                    {
+                        case "1":
+                            sortedTaskList = taskList.OrderBy(task => task.DueDate).ToList();
+                            displayTaskList(sortedTaskList);
+                            break;
+                        case "2":
+                            sortedTaskList = taskList.OrderByDescending(task => task.DueDate).ToList();
+                            displayTaskList(sortedTaskList);
+                            break;
+                        case "3":
+                            sortedTaskList = taskList.Where(task => task.Status == StatusTypes.Completed).ToList();
+                            displayTaskList(sortedTaskList);
+                            break;
+                        case "4":
+                            sortedTaskList = taskList.Where(task => task.Status == StatusTypes.Pending).ToList();
+                            displayTaskList(sortedTaskList);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-        }
-
-        public List<Task> updateTask(List<Task> taskList)
-        {
-            displayTaskList(taskList);
-            Console.WriteLine("Enter Task No to marked \"Completed\"; q to Quit:");
-            string taskNoStr = Console.ReadLine();
-            if (!taskNoStr.Equals("q"))
+            else
             {
-                if (isInputNumber(taskNoStr))
+                Console.WriteLine("No Records");
+            }
+        }
+        public void updateTaskCSV()
+        {
+            if (displayTaskListByPath(Task.filePath))
+            {
+                List<Task> taskList = LoadData<Task>(Task.filePath);
+                string taskNoStr = "";
+                do
                 {
-                    int taskNo = int.Parse(taskNoStr);
-                    if(taskNo > 0 && taskNo <= taskList.Count)
+                    Console.WriteLine("Enter Task No to marked \"Completed\"; q to Quit:");
+                    taskNoStr = Console.ReadLine();
+                    if (isInputNumber(taskNoStr))
                     {
-                        int i = taskNo - 1;
-                        Console.WriteLine("Task Updated: ");
-                        taskList[i].Status = Status.Completed;
-                        displayColor(taskList[i].Status, taskList[i].ToString());
+                        int taskNo = int.Parse(taskNoStr);
+                        if (taskNo > 0 && taskNo <= taskList.Count)
+                        {
+                            int i = taskNo - 1;
+                            Console.WriteLine("Task Updated: ");
+                            taskList[i].Status = StatusTypes.Completed;
+                            displayColor(taskList[i].Status, taskList[i].ToString());
+                            SaveData<Task>(taskList, Task.filePath);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Task No");
+                        }
                     }
                     else
                     {
                         Console.WriteLine("Invalid Task No");
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Task No");
-                }
+                } while (!taskNoStr.Equals("q"));
             }
-            return taskList;
-        }
-
-        public List<Task> deleteTask(List<Task> taskList)
-        {
-            displayTaskList(taskList);
-            Console.WriteLine("Enter Task No to delete; q to Quit:");
-            string taskNoStr = Console.ReadLine();
-            if (!taskNoStr.Equals("q"))
+            else
             {
-                if (isInputNumber(taskNoStr))
+                Console.WriteLine("No Records");
+            }
+        }
+        public void deleteTaskCSV()
+        {
+            if (displayTaskListByPath(Task.filePath))
+            {
+                List<Task> taskList = LoadData<Task>(Task.filePath);
+                string taskNoStr = "";
+                do
                 {
-                    int taskNo = int.Parse(taskNoStr);
-                    if (taskNo > 0 && taskNo <= taskList.Count)
+                    Console.WriteLine("Enter Task No to delete; q to Quit:");
+                    taskNoStr = Console.ReadLine();
+
+                    if (isInputNumber(taskNoStr))
                     {
-                        int i = taskNo - 1;
-                        Console.WriteLine("Task Removed: ");
-                        displayColor(taskList[i].Status, taskList[i].ToString());
-                        taskList.RemoveAt(i);
+                        int taskNo = int.Parse(taskNoStr);
+                        if (taskNo > 0 && taskNo <= taskList.Count)
+                        {
+                            int i = taskNo - 1;
+                            Console.WriteLine("Task Removed: ");
+                            displayColor(taskList[i].Status, taskList[i].ToString());
+                            taskList.RemoveAt(i);
+                            SaveData<Task>(taskList, Task.filePath);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid Task No");
+                        }
                     }
                     else
                     {
                         Console.WriteLine("Invalid Task No");
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Task No");
-                }
+                } while (!taskNoStr.Equals("q"));
             }
-            return taskList;
+            else
+            {
+                Console.WriteLine("No Records");
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace TaskListApplication2
 {
-    class CSVManager : Manager
+    class General : Settings
     {
         //save data to CSV file
         public static void SaveData<T>(List<T> data, string filePath)
@@ -37,7 +37,50 @@ namespace TaskListApplication2
                 return new List<T>();
             }
         }
-        public static bool displayTaskCSVList(string filePath)
+
+        //check is the string null?
+        public static bool isStringNull(string str)
+        {
+            if (str.Length <= 0 || str == null || str.Equals(""))
+            {
+                return true;
+            }
+            return false;
+        }
+        //check is input the number?
+        public static bool isInputNumber(string input)
+        {
+            return int.TryParse(input, out _);
+        }
+
+        //color the task row
+        public static void displayColor(StatusTypes s, String str)
+        {
+            if (s.Equals(StatusTypes.Pending))
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+            }
+            else if (s.Equals(StatusTypes.Completed))
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+            }
+            Console.WriteLine(str);
+            Console.ResetColor();
+        }
+
+        public static void displayTaskList(List<Task> list)
+        {
+            Console.WriteLine("Task List:");
+            for (int i = 0; i < list.Count; i++)
+            {
+                int no = i + 1;
+                displayColor(list[i].Status,
+                    no + ". " + "\t" +
+                    list[i]);
+            }
+        }
+
+        public static bool q(string filePath)
         {
             List<Task> taskList = new List<Task>();
             try
@@ -48,14 +91,7 @@ namespace TaskListApplication2
 
             if (taskList.Count > 0)
             {
-                Console.WriteLine("Task List:");
-                for (int i = 0; i < taskList.Count; i++)
-                {
-                    int no = i + 1;
-                    displayColor(taskList[i].Status,
-                        no + ". " + "\t" +
-                        taskList[i]);
-                }
+                displayTaskList(taskList);
                 return true;
             }
             else

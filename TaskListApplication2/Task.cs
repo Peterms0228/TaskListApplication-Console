@@ -4,23 +4,21 @@ using System.Text;
 
 namespace TaskListApplication2
 {
-    public enum Status { Pending, Completed }
-
-    class Task : CSVManager
+    class Task : General
     {
         private string name;
         private DateTime dueDate;
-        private Status status;
+        private StatusTypes status;
 
         //Constructor
         public Task(){
-            this.status = Status.Pending;
+            this.status = StatusTypes.Pending;
         }
         public Task(string name, DateTime dueDate)
         {
             this.name = name;
             this.dueDate = dueDate;
-            this.status = Status.Pending;
+            this.status = StatusTypes.Pending;
         }
 
         //Getter & Setter
@@ -36,7 +34,7 @@ namespace TaskListApplication2
             set { dueDate = value; }
         }
 
-        public Status Status
+        public StatusTypes Status
         {
             get { return status; }
             set { status = value; }
@@ -48,7 +46,6 @@ namespace TaskListApplication2
                 this.dueDate.ToString(dateFormat) + "\t" +
                 this.status;
         }
-        /*
         public void SaveData(List<Task> data, string filePath)
         {
             SaveData<Task>(data, filePath);
@@ -56,6 +53,6 @@ namespace TaskListApplication2
         public List<Task> LoadData(string filePath)
         {
             return LoadData<Task>(filePath);
-        }*/
+        }
     }
 }
