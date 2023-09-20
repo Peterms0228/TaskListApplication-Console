@@ -80,7 +80,7 @@ namespace TaskListApplication2
             }
         }
 
-        public static bool q(string filePath)
+        public static bool displayTaskListByPath(string filePath)
         {
             List<Task> taskList = new List<Task>();
             try
