@@ -4,22 +4,17 @@ using System.Collections.Generic;
 
 namespace TaskListApplication2
 {
-    class Program : TaskManager
+    class Program
     {
-        //Temporary Memory
-        public static List<Task> taskList = new List<Task>();
-        
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            //test Data
-            for (int i = 1; i <= 10; i++) {
-                taskList.Add(new Task("Task " + i, DateTime.Now));
+            TaskManager taskManager = new TaskManager();
+            TaskCSVManager taskCSVManager = new TaskCSVManager();
 
-                CSVData data = new CSVData();
-                data.SaveData(taskList, Task.taskPendingPath);
-            }
-          
+            //test only
+            taskCSVManager.loadTestData();
+            //test only
+
             string option = "";
             while(option != "q")
             {
@@ -36,25 +31,15 @@ namespace TaskListApplication2
                 switch (option)
                 {
                     case "1":
-                        taskList = addTask(taskList);
+                        taskCSVManager.addTaskCSV();
                         break;
                     case "2":
-                        if (taskList.Count == 0)
-                            Console.WriteLine("No Task Yet");
-                        else
-                            viewTask(taskList);
+                        taskCSVManager.viewTaskCSV();
                         break;
                     case "3":
-                        if (taskList.Count == 0)
-                            Console.WriteLine("No Task Yet");
-                        else
-                            taskList = updateTask(taskList);
                         break;
                     case "4":
-                        if (taskList.Count == 0)
-                            Console.WriteLine("No Task Yet");
-                        else
-                            taskList = deleteTask(taskList);
+                            //taskList = deleteTask(taskList);
                         break;
                     default:
                         break;

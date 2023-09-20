@@ -6,12 +6,11 @@ namespace TaskListApplication2
 {
     public enum Status { Pending, Completed }
 
-    class Task : Settings
+    class Task : CSVManager
     {
         private string name;
         private DateTime dueDate;
         private Status status;
-        private CSVData csvData = new CSVData();
 
         //Constructor
         public Task(){
@@ -49,14 +48,14 @@ namespace TaskListApplication2
                 this.dueDate.ToString(dateFormat) + "\t" +
                 this.status;
         }
+        /*
         public void SaveData(List<Task> data, string filePath)
         {
-            csvData.SaveData<Task>(data, filePath);
+            SaveData<Task>(data, filePath);
         }
         public List<Task> LoadData(string filePath)
         {
-            return csvData.LoadData<Task>(filePath);
-        }
-
+            return LoadData<Task>(filePath);
+        }*/
     }
 }

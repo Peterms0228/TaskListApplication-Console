@@ -21,22 +21,6 @@ namespace TaskListApplication2
             return int.TryParse(input, out _);
         }
 
-        //check is the task inside task list
-        //-1 = Invalid; else Valid
-        /*
-        public static int isTaskNoValid(string taskNoStr)
-        {
-            if (int.TryParse(taskNoStr, out int taskNo))
-            {
-                if (0 < taskNo && taskNo <= taskList.Count)
-                {
-                    return taskNo - 1;
-                }
-            }
-            return -1;
-        }
-        */
-
         //color the task row
         public static void displayColor(Status s, String str)
         {

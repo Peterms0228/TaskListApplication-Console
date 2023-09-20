@@ -6,7 +6,7 @@ namespace TaskListApplication2
 {
     class TaskManager : Manager
     {
-        public static List<Task> addTask(List<Task> taskList)
+        public List<Task> addTask(List<Task> taskList)
         {
             Task task = new Task();
 
@@ -46,7 +46,7 @@ namespace TaskListApplication2
             return taskList;
         }
 
-        public static void viewTask(List<Task> taskList)
+        public void viewTask(List<Task> taskList)
         {
             string option = "";
             displayTaskList(taskList);
@@ -84,7 +84,7 @@ namespace TaskListApplication2
             }
         }
 
-        public static List<Task> updateTask(List<Task> taskList)
+        public List<Task> updateTask(List<Task> taskList)
         {
             displayTaskList(taskList);
             Console.WriteLine("Enter Task No to marked \"Completed\"; q to Quit:");
@@ -114,7 +114,7 @@ namespace TaskListApplication2
             return taskList;
         }
 
-        public static List<Task> deleteTask(List<Task> taskList)
+        public List<Task> deleteTask(List<Task> taskList)
         {
             displayTaskList(taskList);
             Console.WriteLine("Enter Task No to delete; q to Quit:");

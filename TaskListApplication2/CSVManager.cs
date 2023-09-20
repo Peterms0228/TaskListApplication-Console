@@ -8,10 +8,10 @@ using System.Linq;
 
 namespace TaskListApplication2
 {
-    class CSVData
+    class CSVManager : Manager
     {
         //save data to CSV file
-        public void SaveData<T>(List<T> data, string filePath)
+        public static void SaveData<T>(List<T> data, string filePath)
         {
             using (var writer = new StreamWriter(filePath))
             using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
@@ -21,7 +21,7 @@ namespace TaskListApplication2
         }
 
         //load data from CSV file
-        public List<T> LoadData<T>(string filePath)
+        public static List<T> LoadData<T>(string filePath)
         {
             try
             {
@@ -33,10 +33,36 @@ namespace TaskListApplication2
             }
             catch (Exception ex)
             {
-                // Handle exceptions or propagate them as needed
-                Console.WriteLine($"Error loading data from CSV: {ex.Message}");
+                //If no found, create new one
                 return new List<T>();
             }
+        }
+        public static bool displayTaskCSVList(string filePath)
+        {
+            List<Task> taskList = new List<Task>();
+            try
+            {
+                taskList = LoadData<Task>(filePath);
+            }
+            catch (Exception ex) { }
+
+            if (taskList.Count > 0)
+            {
+                Console.WriteLine("Task List:");
+                for (int i = 0; i < taskList.Count; i++)
+                {
+                    int no = i + 1;
+                    displayColor(taskList[i].Status,
+                        no + ". " + "\t" +
+                        taskList[i]);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }
