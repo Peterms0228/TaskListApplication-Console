@@ -4,21 +4,21 @@ using System.Text;
 
 namespace TaskListApplication2
 {
-    class Task : General
+    class Task 
     {
         private string name;
         private DateTime dueDate;
-        private StatusTypes status;
+        private Status status;
 
         //Constructor
         public Task(){
-            this.status = StatusTypes.Pending;
+            this.status = Status.Pending;
         }
         public Task(string name, DateTime dueDate)
         {
             this.name = name;
             this.dueDate = dueDate;
-            this.status = StatusTypes.Pending;
+            this.status = Status.Pending;
         }
 
         //Getter & Setter
@@ -34,7 +34,7 @@ namespace TaskListApplication2
             set { dueDate = value; }
         }
 
-        public StatusTypes Status
+        public Status Status
         {
             get { return status; }
             set { status = value; }
@@ -43,16 +43,16 @@ namespace TaskListApplication2
         public override string ToString()
         {
             return this.name + "\t" +
-                this.dueDate.ToString(dateFormat) + "\t" +
+                this.dueDate.ToString(Settings.dateFormat) + "\t" +
                 this.status;
         }
         public void SaveData(List<Task> data, string filePath)
         {
-            SaveData<Task>(data, filePath);
+            General.SaveData<Task>(data, filePath);
         }
         public List<Task> LoadData(string filePath)
         {
-            return LoadData<Task>(filePath);
+            return General.LoadData<Task>(filePath);
         }
     }
 }

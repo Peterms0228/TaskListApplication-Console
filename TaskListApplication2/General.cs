@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace TaskListApplication2
 {
-    class General : Settings
+    class General
     {
         //save data to CSV file
         public static void SaveData<T>(List<T> data, string filePath)
@@ -54,13 +54,13 @@ namespace TaskListApplication2
         }
 
         //color the task row
-        public static void displayColor(StatusTypes s, String str)
+        public static void displayColor(Status s, String str)
         {
-            if (s.Equals(StatusTypes.Pending))
+            if (s.Equals(Status.Pending))
             {
                 Console.BackgroundColor = ConsoleColor.Red;
             }
-            else if (s.Equals(StatusTypes.Completed))
+            else if (s.Equals(Status.Completed))
             {
                 Console.BackgroundColor = ConsoleColor.Green;
             }

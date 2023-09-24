@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TaskListApplication2
 {
-    class TaskManager : General, IManager
+    class TaskCsvManager : General, IManager
     {
         //test only
         public void loadTestData()
@@ -14,17 +14,17 @@ namespace TaskListApplication2
             {
                 taskList.Add(new Task("Task " + i, DateTime.Now.AddDays(i)));
 
-                SaveData(taskList, Task.filePath);
+                SaveData(taskList, Settings.filePath);
             }
         }
         //test only
 
-        public void addTaskCSV()
+        public void addTask()
         {
             List<Task> taskList = new List<Task>();
             try
             {
-                taskList = LoadData<Task>(Task.filePath);
+                taskList = LoadData<Task>(Settings.filePath);
             }
             catch (Exception ex) { }
 
@@ -47,7 +47,7 @@ namespace TaskListApplication2
             {
                 Console.WriteLine("Enter Due Date (dd/mm/yyyy):");
                 String inputDate = Console.ReadLine();
-                if (DateTime.TryParseExact(inputDate, dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                if (DateTime.TryParseExact(inputDate, Settings.dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
                 {
                     isValidDate = true;
                     task.DueDate = parsedDate;
@@ -62,13 +62,13 @@ namespace TaskListApplication2
             Console.WriteLine("Task Added:");
             displayColor(task.Status, task.ToString());
 
-            SaveData<Task>(taskList, Task.filePath);
+            SaveData<Task>(taskList, Settings.filePath);
         }
-        public void viewTaskCSV()
+        public void viewTask()
         {
-            if (displayTaskListByPath(Task.filePath))
+            if (displayTaskListByPath(Settings.filePath))
             {
-                List<Task> taskList = LoadData<Task>(Task.filePath);
+                List<Task> taskList = LoadData<Task>(Settings.filePath);
                 string option = "";
                 while (option != "q")
                 {
@@ -91,11 +91,11 @@ namespace TaskListApplication2
                             displayTaskList(sortedTaskList);
                             break;
                         case "3":
-                            sortedTaskList = taskList.Where(task => task.Status == StatusTypes.Completed).ToList();
+                            sortedTaskList = taskList.Where(task => task.Status == Status.Completed).ToList();
                             displayTaskList(sortedTaskList);
                             break;
                         case "4":
-                            sortedTaskList = taskList.Where(task => task.Status == StatusTypes.Pending).ToList();
+                            sortedTaskList = taskList.Where(task => task.Status == Status.Pending).ToList();
                             displayTaskList(sortedTaskList);
                             break;
                         default:
@@ -108,11 +108,11 @@ namespace TaskListApplication2
                 Console.WriteLine("No Records");
             }
         }
-        public void updateTaskCSV()
+        public void updateTask()
         {
-            if (displayTaskListByPath(Task.filePath))
+            if (displayTaskListByPath(Settings.filePath))
             {
-                List<Task> taskList = LoadData<Task>(Task.filePath);
+                List<Task> taskList = LoadData<Task>(Settings.filePath);
                 string taskNoStr = "";
                 do
                 {
@@ -125,9 +125,9 @@ namespace TaskListApplication2
                         {
                             int i = taskNo - 1;
                             Console.WriteLine("Task Updated: ");
-                            taskList[i].Status = StatusTypes.Completed;
+                            taskList[i].Status = Status.Completed;
                             displayColor(taskList[i].Status, taskList[i].ToString());
-                            SaveData<Task>(taskList, Task.filePath);
+                            SaveData<Task>(taskList, Settings.filePath);
                         }
                         else
                         {
@@ -145,11 +145,11 @@ namespace TaskListApplication2
                 Console.WriteLine("No Records");
             }
         }
-        public void deleteTaskCSV()
+        public void deleteTask()
         {
-            if (displayTaskListByPath(Task.filePath))
+            if (displayTaskListByPath(Settings.filePath))
             {
-                List<Task> taskList = LoadData<Task>(Task.filePath);
+                List<Task> taskList = LoadData<Task>(Settings.filePath);
                 string taskNoStr = "";
                 do
                 {
@@ -165,7 +165,7 @@ namespace TaskListApplication2
                             Console.WriteLine("Task Removed: ");
                             displayColor(taskList[i].Status, taskList[i].ToString());
                             taskList.RemoveAt(i);
-                            SaveData<Task>(taskList, Task.filePath);
+                            SaveData<Task>(taskList, Settings.filePath);
                         }
                         else
                         {

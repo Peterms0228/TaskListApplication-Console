@@ -6,9 +6,9 @@ namespace TaskListApplication2
 {
     interface IManager
     {
-        public void addTaskCSV();
-        public void viewTaskCSV();
-        public void updateTaskCSV();
-        public void deleteTaskCSV();
+        public void addTask();
+        public void viewTask();
+        public void updateTask();
+        public void deleteTask();
     }
 }

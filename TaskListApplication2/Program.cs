@@ -8,7 +8,7 @@ namespace TaskListApplication2
     {
         public static void Main(string[] args)
         {
-            TaskManager taskManager = new TaskManager();
+            TaskCsvManager taskManager = new TaskCsvManager();
             //TaskCSVManager taskCSVManager = new TaskCSVManager();
 
             //test only
@@ -31,16 +31,16 @@ namespace TaskListApplication2
                 switch (option)
                 {
                     case "1":
-                        taskManager.addTaskCSV();
+                        taskManager.addTask();
                         break;
                     case "2":
-                        taskManager.viewTaskCSV();
+                        taskManager.viewTask();
                         break;
                     case "3":
-                        taskManager.updateTaskCSV();
+                        taskManager.updateTask();
                         break;
                     case "4":
-                        taskManager.deleteTaskCSV();
+                        taskManager.deleteTask();
                         break;
                     default:
                         break;

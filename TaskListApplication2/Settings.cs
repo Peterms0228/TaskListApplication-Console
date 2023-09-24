@@ -6,8 +6,7 @@ namespace TaskListApplication2
 {
     class Settings
     {
-        public static string dateFormat = "dd/MM/yyyy";
-        public static string filePath = "Task List.csv";
-        public enum StatusTypes { Pending, Completed };
+        public const string dateFormat = "dd/MM/yyyy";
+        public const string filePath = "Task List.csv";
     }
 }
