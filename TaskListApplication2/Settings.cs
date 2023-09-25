@@ -8,5 +8,6 @@ namespace TaskListApplication2
     {
         public const string dateFormat = "dd/MM/yyyy";
         public const string filePath = "Task List.csv";
+        public const string testPath = "Test List.csv";
     }
 }

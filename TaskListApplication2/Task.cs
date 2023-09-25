@@ -46,6 +46,14 @@ namespace TaskListApplication2
                 this.dueDate.ToString(Settings.dateFormat) + "\t" +
                 this.status;
         }
+
+        public virtual void displayBgColor(string contents)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(contents);
+            Console.ResetColor();
+        }
+
         public void SaveData(List<Task> data, string filePath)
         {
             General.SaveData<Task>(data, filePath);
